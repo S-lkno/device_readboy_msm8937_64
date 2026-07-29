@@ -5,6 +5,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-add_lunch_combo omni_msm8937_64-user
-add_lunch_combo omni_msm8937_64-userdebug
-add_lunch_combo omni_msm8937_64-eng
+#add_lunch_combo omni_msm8937_64-user
+#add_lunch_combo omni_msm8937_64-userdebug
+#add_lunch_combo omni_msm8937_64-eng

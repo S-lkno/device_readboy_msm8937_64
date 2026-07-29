@@ -19,7 +19,7 @@ TARGET_NO_BOOTLOADER := true
 
 # ===== 内核（预编译或源码） =====
 TARGET_FORCE_PREBUILT_KERNEL := true
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz   # 改成 Image.gz
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image
 
 # ===== 内核配置 =====
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78B0000
@@ -29,7 +29,7 @@ BOARD_RAMDISK_OFFSET := 0x01000000
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
-BOARD_KERNEL_IMAGE_NAME := Image.gz   # 改为 Image.gz
+BOARD_KERNEL_IMAGE_NAME := Image
 
 # ===== 分区大小 =====
 BOARD_FLASH_BLOCK_SIZE := 131072

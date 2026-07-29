@@ -91,3 +91,5 @@ TW_DEVICE_VERSION := Readboy-G500X_By-S_lkno
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_RECOVERY_SWIPE := true
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
+# 显式声明支持64位应用（解决32-bit-app-only错误）
+TARGET_SUPPORTS_64_BIT_APPS := true

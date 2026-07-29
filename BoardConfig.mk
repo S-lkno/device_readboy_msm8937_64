@@ -56,7 +56,7 @@ BOARD_USES_QCOM_DECRYPTION := true
 # TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
 
 # ===== 显示与UI（适配 1920×1200 屏幕） =====
-TW_THEME := portrait_xhdpi         # 适合 1080p 及以上分辨率
+TW_THEME := portrait_hdpi         # 适合 1080p 及以上分辨率
 TARGET_SCREEN_DENSITY := 320       # 1920×1200 典型密度
 TW_EXTRA_LANGUAGES := true
 TW_DEFAULT_LANGUAGE := zh_CN

@@ -6,3 +6,4 @@
 #
 
 LOCAL_PATH := device/readboy/msm8937_64
+PRODUCT_SHIPPING_API_LEVEL := 24

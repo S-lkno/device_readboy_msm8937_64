@@ -12,7 +12,8 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := generic
 DEVICE_PATH := device/readboy/msm8937_64
-
+# 显式指定 Recovery 根目录的输出位置
+TARGET_RECOVERY_ROOT_OUT := $(TARGET_OUT)/recovery/root
 # ===== Bootloader =====
 TARGET_BOOTLOADER_BOARD_NAME := msm8937
 TARGET_NO_BOOTLOADER := true

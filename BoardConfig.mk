@@ -13,7 +13,7 @@ TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := generic
 DEVICE_PATH := device/readboy/msm8937_64
 # 显式指定 Recovery 根目录的输出位置
-TARGET_RECOVERY_ROOT_OUT := $(TARGET_OUT)/recovery/root
+#TARGET_RECOVERY_ROOT_OUT := $(TARGET_OUT)/recovery/root
 # ===== Bootloader =====
 TARGET_BOOTLOADER_BOARD_NAME := msm8937
 TARGET_NO_BOOTLOADER := true
@@ -76,7 +76,7 @@ TW_DEFAULT_BRIGHTNESS := 1700
 # 这里我们声明使用 toolbox + busybox，但可以在 ramdisk 中手动替换 sh。
 # 更彻底的方案：在设备树目录中放入静态 bash 并链接为 /bin/sh。
 # 具体操作见文末说明。
-TW_USE_TOOLBOX := false           # 禁用 toolbox，改用 busybox（busybox ash 较完整）
+TW_USE_TOOLBOX := true           # 禁用 toolbox，改用 busybox（busybox ash 较完整）
 # 若要启用 bash，请手动添加以下步骤（见说明）
 
 # ===== 调试与功能 =====

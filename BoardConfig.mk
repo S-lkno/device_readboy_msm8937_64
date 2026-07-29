@@ -11,6 +11,7 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := generic
+DEVICE_PATH := device/readboy/msm8937_64
 
 # ===== Bootloader =====
 TARGET_BOOTLOADER_BOARD_NAME := msm8937

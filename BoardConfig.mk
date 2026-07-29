@@ -1,23 +1,10 @@
-#
-# Copyright (C) 2024 The Android Open Source Project
-# Copyright (C) 2024 SebaUbuntu's TWRP device tree generator
-#
-# SPDX-License-Identifier: Apache-2.0
-#
-
-DEVICE_PATH := device/readboy/msm8937_64
-
-# For building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
-
-# Architecture
+# ===== 设备基础 =====
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 := 
+TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := generic
-
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv7-a-neon
 TARGET_2ND_CPU_ABI := armeabi-v7a
@@ -25,62 +12,77 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := generic
 
-# APEX
-OVERRIDE_TARGET_FLATTEN_APEX := true
-
-# Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := QC_Reference_Phone
+# ===== Bootloader =====
+TARGET_BOOTLOADER_BOARD_NAME := msm8937
 TARGET_NO_BOOTLOADER := true
 
-# Display
-TARGET_SCREEN_DENSITY := 240
+# ===== 内核（预编译或源码） =====
+# 使用预编译内核（原厂）
+TARGET_FORCE_PREBUILT_KERNEL := true
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 
-# Kernel
+# 若自己编译内核（开启 EXT4 新特性），注释上面两行，取消下面两行并配置
+# TARGET_KERNEL_SOURCE := kernel/readboy/msm8937_64
+# TARGET_KERNEL_CONFIG := msm8937_64_defconfig
+
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78B0000
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78B0000 buildvariant=user
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_RAMDISK_OFFSET := 0x01000000
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_KERNEL_IMAGE_NAME := Image
-TARGET_KERNEL_CONFIG := msm8937_64_defconfig
-TARGET_KERNEL_SOURCE := kernel/readboy/msm8937_64
 
-# Kernel - prebuilt
-TARGET_FORCE_PREBUILT_KERNEL := true
-ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
-endif
+# ===== 分区大小 =====
+BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 
-# Partitions
-BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
-BOARD_BOOTIMAGE_PARTITION_SIZE := 13840384
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 13840384
-BOARD_HAS_LARGE_FILESYSTEM := true
-BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
-BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-TARGET_COPY_OUT_VENDOR := vendor
-
-# Platform
-TARGET_BOARD_PLATFORM := msm8937
-
-# Recovery
+# ===== 文件系统基础支持 =====
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-# Security patch level
-VENDOR_SECURITY_PATCH := 2021-08-01
+# ===== 格式化工具支持（多文件系统） =====
+TW_INCLUDE_BTRFS := true          # 支持 btrfs 格式化
+TW_INCLUDE_NTFS_3G := true        # 支持 NTFS 读写和格式化
+TW_INCLUDE_EXFAT := true          # 支持 exFAT 格式化
+TW_INCLUDE_F2FS := true           # 已有，明确开启
+TW_INCLUDE_EXT4 := true           # 默认
 
-# Hack: prevent anti rollback
-PLATFORM_SECURITY_PATCH := 2099-12-31
-VENDOR_SECURITY_PATCH := 2099-12-31
-PLATFORM_VERSION := 16.1.0
+# ===== 加密支持（可选） =====
+TW_INCLUDE_CRYPTO := true
+BOARD_USES_QCOM_DECRYPTION := true
+# TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
 
-# TWRP Configuration
-TW_THEME := portrait_hdpi
+# ===== 显示与UI（适配 1920×1200 屏幕） =====
+TW_THEME := portrait_xhdpi         # 适合 1080p 及以上分辨率
+TARGET_SCREEN_DENSITY := 320       # 1920×1200 典型密度
 TW_EXTRA_LANGUAGES := true
-TW_SCREEN_BLANK_ON_BOOT := true
+TW_DEFAULT_LANGUAGE := zh_CN
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_USE_TOOLBOX := true
+
+# ===== 亮度（请确认实际节点） =====
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+TW_MAX_BRIGHTNESS := 4095
+TW_DEFAULT_BRIGHTNESS := 1700
+
+# ===== （toolbox/busybox sh） =====
+
+TW_USE_TOOLBOX := false           # 禁用 toolbox，改用 busybox（busybox ash 较完整）
+
+
+# ===== 调试与功能 =====
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
+TW_USE_LIBUSB := true
+TW_EXCLUDE_MTP := false
+TW_NO_SCREEN_BLANK := true        # 调试时可保持常亮
+
+# ===== 作者信息 =====
+TW_DEVICE_VERSION := Readboy-G500X_By-S_lkno
+
+# ===== 其他 =====
+BOARD_HAS_NO_SELECT_BUTTON := true
+BOARD_RECOVERY_SWIPE := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab

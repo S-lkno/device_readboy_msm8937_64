@@ -1,0 +1,20 @@
+# Qualcomm 加密相关 (FDE /data 解密用)
+# 从原厂 Android 7.1 系统提取: ./extract-files.sh
+
+# HIDL/QSEE
+vendor/lib64/libQSEEComAPI.so
+vendor/lib/libQSEEComAPI.so
+vendor/lib64/libcryptfs_hw.so
+vendor/lib/libcryptfs_hw.so
+vendor/lib64/librpmb.so
+vendor/lib/librpmb.so
+vendor/lib64/libkeymasterprovision.so
+vendor/lib/libkeymasterprovision.so
+vendor/lib64/libkeymasterutils.so
+vendor/lib/libkeymasterutils.so
+vendor/lib64/libdrmfsso.so
+vendor/lib/libdrmfsso.so
+vendor/lib64/libdrmtime.so
+vendor/lib/libdrmtime.so
+vendor/lib64/libSecureElement.so
+vendor/lib/libSecureElement.so
